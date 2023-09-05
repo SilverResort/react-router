@@ -1,22 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import Navigation from "./Components/Navigation";
+import { moviesData } from './Data'
+import { Route, Routes } from "react-router-dom";
+import Description from "./Pages/Description";
+import Trailer from "./Pages/Trailer";
+import Home from "./Pages/Home";
 function App() {
+  const [movie,setMovie]=useState(moviesData)
+  const [inputMovie,setInputMovie]=useState('')
+  const [inputStars,setInputStars]=useState(0)
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Navigation setInputMovie={setInputMovie}/>
+        <Routes>
+          <Route exact path='/' element={<Home movie={movie} inputMovie={inputMovie} inputStars={inputStars} setMovie={setMovie} setInputMovie={setInputMovie} setInputStars={setInputStars}/>}/>
+          <Route path='/description/:id' element={<Description movies={movie}/>}/>
+          <Route path='/trailer/:id' element={<Trailer movies={movie}/>}/>
+        </Routes>
       </header>
     </div>
   );
